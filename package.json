@@ -1,0 +1,19 @@
+{
+  "name": "odin_members_only_be",
+  "version": "1.0.0",
+  "description": "Backend for The Odin Project's Members Only Project",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1",
+    "passport-local": "^1.0.0"
+  }
+}
