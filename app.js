@@ -1,5 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
+import session from "express-session";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 import "dotenv/config";
 
 const app = express();
@@ -13,6 +16,32 @@ main().catch((err) => console.log(err));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.session());
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username." });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: "Incorrect password." });
+      }
+      return done(null, user);
+    });
+  })
+);
 
 app.get("/", (req, res, next) => res.send("TEST"));
 
