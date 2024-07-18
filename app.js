@@ -50,4 +50,9 @@ app.post("/sign-up", (req, res, next) => {
   res.json(req.body);
 });
 
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
