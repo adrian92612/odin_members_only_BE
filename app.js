@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
 import morgan from "morgan";
-import { Strategy as LocalStrategy } from "passport-local";
+import * as controller from "./controllers/authController.js";
 import "dotenv/config";
 
 const app = express();
@@ -48,10 +48,7 @@ app.use(passport.session());
 
 app.get("/", (req, res, next) => res.send("TEST"));
 
-app.post("/sign-up", (req, res, next) => {
-  console.log(req.body);
-  res.json(req.body);
-});
+app.post("/sign-up", controller.signup_post);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
